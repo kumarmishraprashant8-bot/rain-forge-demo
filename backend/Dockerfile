@@ -23,4 +23,5 @@ COPY . .
 RUN mkdir -p uploads generated_pdfs
 
 # Command to run the demo app
-CMD ["uvicorn", "app.main_demo:app", "--host", "0.0.0.0", "--port", "8000"]
+# Command to run the demo app (using PORT env var for Render)
+CMD ["sh", "-c", "uvicorn app.main_demo:app --host 0.0.0.0 --port ${PORT:-8000}"]
