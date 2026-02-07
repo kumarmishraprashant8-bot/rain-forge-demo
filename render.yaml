@@ -25,6 +25,12 @@ services:
         value: https://rainforge-frontend.vercel.app,https://rainforge.gov.in
     autoDeploy: false
 
+  # Redis Cache
+  - type: redis
+    name: rainforge-redis
+    plan: free # If available
+    region: singapore
+
 databases:
   # Postgres Database
   - name: rainforge-db
@@ -35,9 +41,5 @@ databases:
 
 # Optional: Redis (Render charges for Redis, unlike free web/db tiers in some plans)
 # Remove if you want to save costs and don't strictly need Redis for the demo
-services:
-  - type: redis
-    name: rainforge-redis
-    plan: free # If available
-    region: singapore
+# Optional: Redis (Redis is now defined above)
 # Forced Update: 02/07/2026 06:07:37
