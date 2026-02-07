@@ -35,9 +35,9 @@ databases:
 
 # Optional: Redis (Render charges for Redis, unlike free web/db tiers in some plans)
 # Remove if you want to save costs and don't strictly need Redis for the demo
-# services:
-#   - type: redis
-#     name: rainforge-redis
-#     plan: free # If available
-#     region: singapore
+services:
+  - type: redis
+    name: rainforge-redis
+    plan: free # If available
+    region: singapore
 # Forced Update: 02/07/2026 06:07:37
