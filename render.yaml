@@ -30,6 +30,7 @@ services:
     name: rainforge-redis
     plan: free # If available
     region: singapore
+    ipAllowList: [] # Required by Render
 
 databases:
   # Postgres Database
