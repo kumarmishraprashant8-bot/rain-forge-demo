@@ -1,4 +1,4 @@
-import React, { useState, Suspense, lazy } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     ArrowRight, ArrowLeft, MapPin, Home, Sparkles, Ruler, Users, Droplets,
@@ -13,6 +13,12 @@ const RoofMap = lazy(() => import('../../components/RoofMap'));
 const IntakePage = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+
+    // Wake up the Render free-tier backend on component mount
+    // so it's ready by the time the user fills the form and submits
+    useEffect(() => {
+        fetch(`${API_BASE_URL}/health`).catch(() => {});
+    }, []);
     const [step, setStep] = useState(1);
     const [mapViewMode, setMapViewMode] = useState<'street' | 'satellite'>('satellite');
     const TOTAL_STEPS = 6;
@@ -122,7 +128,7 @@ const IntakePage = () => {
                     people: formData.num_people,
                     floors: formData.num_floors,
                 };
-                const response = await axios.post(`${API_BASE_URL}/api/v1/assessments`, payload);
+                const response = await axios.post(`${API_BASE_URL}/api/v1/assessments`, payload, { timeout: 30000 });
                 const data = response.data;
                 const result = {
                     project_id: data.assessment_id,
@@ -177,7 +183,7 @@ const IntakePage = () => {
                 budget_inr: budgetMax
             };
 
-            const response = await axios.post(`${API_BASE_URL}/api/v1/assessment/complete`, payload);
+            const response = await axios.post(`${API_BASE_URL}/api/v1/assessment/complete`, payload, { timeout: 30000 });
 
             const data = response.data;
             const result = {
